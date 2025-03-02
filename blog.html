@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Blog Articles</title>
   <style>
-    /* Minimal styling */
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
@@ -15,10 +14,9 @@
       padding: 0;
     }
     a {
-      color: blue; /* Hyperlinks in blue */
+      color: blue;
       text-decoration: none;
     }
-    /* Optional: add some spacing for date text */
     .date {
       margin-left: 5px;
       color: #555;
@@ -36,23 +34,18 @@
   </nav>
 
   <script>
-    // Update this array with your articles:
-    // { title: '...', date: 'YYYY-MM-DD', file: 'path/to/markdown.md' }
     const articles = [
-      // { title: 'Example', date: '2025-03-02', file: './articles/example.md' }
     ];
 
-    // Sort articles by date descending (newest first)
     articles.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     const articlesUl = document.getElementById('articles');
 
-    // Dynamically create the list of articles
     articles.forEach(article => {
       const li = document.createElement('li');
       
       const link = document.createElement('a');
-      link.href = 'article.html?file=' + article.file;  // Points to article.html
+      link.href = 'article.html?file=' + article.file;
       link.textContent = article.title;
 
       const dateSpan = document.createElement('span');
