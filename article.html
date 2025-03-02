@@ -2,63 +2,95 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Blog Articles</title>
+  <title>Article</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Load the Marked library for Markdown conversion -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
+      margin: 0;
+      padding: 20px;
       font-family: Arial, sans-serif;
-      margin: 20px;
+      line-height: 1.6;
+      color: #333;
+      text-align: center;
+      background: #fff;
+    }
+    /* Container for the rendered Markdown */
+    #content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: left; /* for better reading of text and code */
+    }
+    /* Code block styling */
+    pre {
+      background: #f4f4f4;
+      padding: 10px;
+      margin: 1rem 0;
+      border-radius: 3px;
+      font-family: Consolas, Menlo, Monaco, "Courier New", monospace;
+      font-size: 0.9em;
+      white-space: pre;       /* Prevents text wrapping */
+      user-select: text;      /* Ensures text can be highlighted and copied */
+      overflow-x: auto;       /* Allows horizontal scroll if code is wide */
+    }
+    code {
+      font-family: Consolas, Menlo, Monaco, "Courier New", monospace;
+    }
+    /* Inline code style */
+    p code {
+      background: #f4f4f4;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    /* Navigation link styling */
+    .nav {
+      margin-top: 20px;
       text-align: center;
     }
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    a {
+    .nav a {
       color: blue;
       text-decoration: none;
-    }
-    .date {
-      margin-left: 5px;
-      color: #555;
-      font-size: 0.9em;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>Blog Articles</h1>
-  
-  <ul id="articles"></ul>
-
-  <nav>
-    <a href="index.html">Back to Home</a>
-  </nav>
+  <div id="content">
+    Loading...
+  </div>
+  <div class="nav">
+    <a href="blog.html">Back to Blog</a>
+  </div>
 
   <script>
-    const articles = [
-      { title: 'My First Article', date: '2025-03-02', file: './articles/example.md' }
-    ];
-
-    articles.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    const articlesUl = document.getElementById('articles');
-
-    articles.forEach(article => {
-      const li = document.createElement('li');
-      
-      const link = document.createElement('a');
-      link.href = 'article.html?file=' + article.file;
-      link.textContent = article.title;
-
-      const dateSpan = document.createElement('span');
-      dateSpan.className = 'date';
-      dateSpan.textContent = `(${article.date})`;
-
-      li.appendChild(link);
-      li.appendChild(document.createTextNode(' '));
-      li.appendChild(dateSpan);
-
-      articlesUl.appendChild(li);
-    });
+    // Retrieve the 'file' parameter from the URL
+    function getQueryParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+    
+    const file = getQueryParameter('file');
+    
+    if (file) {
+      fetch(file)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Error loading file");
+          }
+          return response.text();
+        })
+        .then(text => {
+          // Convert Markdown to HTML
+          document.getElementById('content').innerHTML = marked.parse(text);
+        })
+        .catch(error => {
+          document.getElementById('content').innerHTML = "Error loading the article.";
+          console.error(error);
+        });
+    } else {
+      document.getElementById('content').innerHTML = "No article specified.";
+    }
   </script>
 </body>
 </html>
