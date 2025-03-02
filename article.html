@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Blog Articles</title>
   <style>
-    /* Minimal styling */
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
@@ -15,10 +14,9 @@
       padding: 0;
     }
     a {
-      color: blue; /* Hyperlinks in blue */
+      color: blue;
       text-decoration: none;
     }
-    /* Optional: add some spacing for date text */
     .date {
       margin-left: 5px;
       color: #555;
@@ -36,20 +34,16 @@
   </nav>
 
   <script>
-    // Update this array with your articles:
-    // { title: '...', date: 'YYYY-MM-DD', file: 'my-article.md' }
     const articles = [
       { title: 'My Third Article', date: '2025-03-02', file: 'article3.md' },
       { title: 'My Second Article', date: '2025-03-01', file: 'article2.md' },
       { title: 'My First Article',  date: '2025-02-28', file: 'article1.md' }
     ];
 
-    // Sort articles by date in descending order (most recent first)
     articles.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     const articlesUl = document.getElementById('articles');
 
-    // Dynamically create the list of articles
     articles.forEach(article => {
       const li = document.createElement('li');
       
